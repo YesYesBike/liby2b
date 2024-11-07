@@ -15,16 +15,17 @@
  *
  * */
 
-//TODO: replace isprint()
 #define ARGBEGIN	for (;argv[1] && argv[1][0] == '-' && argv[1][1]; argc--, argv++) {\
-						int _arg = 0;\
+						char _arg = 0;\
 						char *_args = &argv[1][1];\
 						if (_args[0] == '-' && _args[1] == '\0') {\
 							argc--; argv++; break;\
 						}\
-						while ((_arg=*_args) && isprint(_arg) && _args++)\
+						while ((_arg=*_args) && _args++)\
 							switch (_arg)
 #define ARGEND		}
+
+#define buf_clear()	while(getchar() != '\n')
 
 /* error */
 void err_exit(char *fmt, ...);
