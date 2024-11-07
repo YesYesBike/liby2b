@@ -7,7 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* ARGBEGIN/ARGEND macro was provided from plan9port and rewritten.
+/* 
+ * ARGBEGIN/ARGEND macro was provided from plan9port and rewritten.
  * 
  * Check out the license
  * https://github.com/9fans/plan9port/blob/master/src/lib9/LICENSE
@@ -30,6 +31,7 @@ void err_exit(char *fmt, ...);
 
 
 /* string */
+char *str_copy(char *restrict dst, size_t size, char *restrict src);
 
 
 #endif	/* __Y2B_LIB__ */
