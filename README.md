@@ -29,25 +29,25 @@ ARGF() is the current option argument.
 ```c
 int main(int argc, char *argv[])
 {
-    int aflag;
+	int aflag;
 	char *b_arg;
 
-    ARGBEGIN {
-        case 'a':
-            aflag++;
-            break;
-        case 'b':
+	ARGBEGIN {
+		case 'a':
+			aflag++;
+			break;
+		case 'b':
 			if ((b_arg = ARGF()) == NULL)
-				err_exit("-b needs the arguements\n");
+				err_exit("-b needs the arguement\n");
 
-            printf("Arg: %s\n", b_arg);
-            break;
-        default:
+			printf("Arg: %s\n", b_arg);
+			break;
+		default:
 			printf("'-%c': unknown option\n", ARGC());
-            err_exit("Usage: %s [-a] [-b arg]\n", argv0);
-    } ARGEND
+			err_exit("Usage: %s [-a] [-b arg]\n", argv0);
+	} ARGEND
 
-    return 0;
+	return 0;
 }
 ```
 ##### Notice
@@ -62,18 +62,18 @@ It discards characters in ``stdin`` buffer. Use it instead of '``fflush(stdin)``
 ```c
 int main(void)
 {
-    int a, b;
+	int a, b;
 
-    printf("Enter the number: ");
-    scanf("%d", &a);
-    buf_clear();    /* prevent assigning b */
+	printf("Enter the number: ");
+	scanf("%d", &a);
+	buf_clear();	/* prevent assigning b */
 
-    printf("Enter the number: ");
-    scanf("%d", &b);
-    
-    printf("%d + %d = %d\n", a, b, a+b);
+	printf("Enter the number: ");
+	scanf("%d", &b);
+	
+	printf("%d + %d = %d\n", a, b, a+b);
 
-    return 0;
+	return 0;
 }
 ```
 
@@ -108,9 +108,9 @@ void err_exit(char *fmt, ...)
 ```c
 int main(void)
 {
-    int err_no = 404;
-    char *err_msg = "Page Not Found";
-    err_exit("%d: %s\n", err_no, err_msg);
+	int err_no = 404;
+	char *err_msg = "Page Not Found";
+	err_exit("%d: %s\n", err_no, err_msg);
 }
 ```
 
@@ -133,12 +133,12 @@ char *str_copy(char *restrict dst, size_t size, const char *restrict src)
 
 int main(void)
 {
-    char asdf[SIZE];
-    char *str = "1234567890";
+	char asdf[SIZE];
+	char *str = "1234567890";
 
-    puts(str_copy(asdf, SIZE, str));    /* 1234 */
+	puts(str_copy(asdf, SIZE, str));	/* 1234 */
 
-    return 0;
+	return 0;
 }
 ```
 
