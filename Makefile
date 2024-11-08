@@ -4,11 +4,14 @@ LFLAG = -ly2b
 all: main.c $(LIB)
 	$(CC) $< -L. $(LFLAG)
 
-liby2b.a: error.o string.o
+liby2b.a: error.o string.o base.o
 	ar -rcs $@ $^
 
 error.o: error.c liby2b.h
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 string.o: string.c liby2b.h
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+base.o: base.c liby2b.h
 	$(CC) $(CFLAGS) -c -o $@ $<

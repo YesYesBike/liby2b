@@ -6,11 +6,10 @@
  * strcpy, strcpy_s
  *
  * */
-char *str_copy(char *restrict dst, size_t size, char *restrict src)
+char *str_copy(char *restrict dst, size_t size, const char *restrict src)
 {
-	char *p1, *p2;
-	p1 = src;
-	p2 = dst;
+	const char *p1 = src;
+	char *p2 = dst;
 
 	while (*p2++ = *p1++) {
 		if (p2 >= dst+size)

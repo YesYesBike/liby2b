@@ -7,28 +7,44 @@ Some of them are provided from other open source projects.
 
 
 ### How to use
+``make`` in the shell and include ``liby2b.a`` and ``liby2b.h`` on your code.
 
+
+## Notice
+* ``argv0`` is a global variable that indicates ``argv[0][0]``.
+``ARGBEGIN`` macro sets ``argv0`` to the name of the program.
 
 ## List
 
 ### Macro
 
-#### ARGBEGIN/ARGEND
-They are used to get option from ``argv``.
+#### ARGBEGIN/ARGEND/ARGC()/ARGF()
+They are used to get options from ``argv``.
+Options end after an argument ``−−``, before an argument ``−``,
+or before an argument that doesn’t begin with ``−``. 
+ARGC() is the current option character.
+ARGF() is the current option argument.
 
 ##### Usage
 ```c
 int main(int argc, char *argv[])
 {
-    char *argv0 = "program";
     int aflag;
+	char *b_arg;
 
     ARGBEGIN {
         case 'a':
             aflag++;
             break;
+        case 'b':
+			if ((b_arg = ARGF()) == NULL)
+				err_exit("-b needs the arguements\n");
+
+            printf("Arg: %s\n", b_arg);
+            break;
         default:
-            err_exit("Usage: %s [-a]\n", argv0);
+			printf("'-%c': unknown option\n", ARGC());
+            err_exit("Usage: %s [-a] [-b arg]\n", argv0);
     } ARGEND
 
     return 0;
@@ -36,9 +52,7 @@ int main(int argc, char *argv[])
 ```
 ##### Notice
 They change the value of ``argc`` and ``argv``.
-
-##### TODO
-Add the feature to handle arguments of the option.
+Use ``ARGF()`` once for each option.
 
 
 #### buf_clear()
@@ -60,6 +74,21 @@ int main(void)
     printf("%d + %d = %d\n", a, b, a+b);
 
     return 0;
+}
+```
+
+#### nelen()
+Returns the count of elements in the array.
+
+##### Usage
+```c
+int main(void)
+{
+	char asdf[SIZE];
+	
+	printf("%d\n", nelem(asdf));	/* SIZE */
+
+	return 0;
 }
 ```
 
@@ -91,11 +120,11 @@ int main(void)
 
 #### str_copy()
 Work similar with ``strcpy_s``. It copies the null-terminated byte string from ``src`` to ``dst``.
-Difference is the return value. It returns ``dst`` while ``strcpy_s`` returns error number.
+Difference is the return value. It returns ``dst`` while ``strcpy_s`` returns an error number.
 
 ##### Synopsis
 ```c
-char *str_copy(char *restrict dst, size_t size, char *restrict src)
+char *str_copy(char *restrict dst, size_t size, const char *restrict src)
 ```
 
 ##### Usage
